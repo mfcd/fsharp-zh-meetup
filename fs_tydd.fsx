@@ -1,4 +1,4 @@
-// Exhaustiveness
+// Discriminated Union and exhaustiveness
 // Idea: promote such warnings to errors!
 type TrafficLight = 
     | Red 
@@ -10,6 +10,12 @@ let getAction light =
     | Red -> "Stop"
     | Green -> "Go"
     // We intentionally forgot Yellow!
+
+
+type PaymentMethod =
+    | Cash
+    | CreditCard of string * int  // Holds a tuple: Card Number, Expiry Year
+    | PayPal of string            // Holds a single string: Email Address
 
 
 // Single case discriminated unions with a private constructor
@@ -30,13 +36,13 @@ module Email =
     let send (email: EmailAddress) =
         printfn "Sending to: %s" (value email)
 
-let sendWelcome input =
-    match Email.create input with
+let sendWelcomeTo string =
+    match Email.create string with
     | Some email -> Email.send email
-    | None       -> printfn "Invalid email: %s" input
+    | None       -> printfn "Invalid email: %s" string
 
-sendWelcome "mattia@entropy42.com"   // Sending to: mattia@entropy42.com
-sendWelcome "not-an-email"           // Invalid email: not-an-email
+sendWelcomeTo "mattia@entropy42.com"   // Sending to: mattia@entropy42.com
+sendWelcomeTo "not-an-email"           // Invalid email: not-an-email
 
 
 //
