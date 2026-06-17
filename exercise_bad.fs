@@ -1,5 +1,5 @@
 public class Spaceship {
-    // Spatial Data
+    // Moving data
     public double Altitude { get; set; } 
     public double Velocity { get; set; } 
     public double EngineThrust { get; set; } 

@@ -1,5 +1,11 @@
 // Discriminated Union and exhaustiveness
 // Idea: promote such warnings to errors!
+type PaymentMethod =
+    | Cash
+    | CreditCard of string * int  // Holds a tuple: Card Number, Expiry Year
+    | PayPal of string            // Holds a single string: Email Address
+
+
 type TrafficLight = 
     | Red 
     | Yellow 
@@ -10,12 +16,6 @@ let getAction light =
     | Red -> "Stop"
     | Green -> "Go"
     // We intentionally forgot Yellow!
-
-
-type PaymentMethod =
-    | Cash
-    | CreditCard of string * int  // Holds a tuple: Card Number, Expiry Year
-    | PayPal of string            // Holds a single string: Email Address
 
 
 // Single case discriminated unions with a private constructor
@@ -90,6 +90,14 @@ let displayUserInfo (rawJson: string) =
     // user.Id          is int     ← compiler knows this
     printfn "User %s (id=%d) has %d public repos." user.Login user.Id user.PublicRepos
 
+displayUserInfo """
+    {
+        "login": "octocat",
+        "id": 5832347,
+        "public_repos": "foo",
+        "bio": "Testing"
+    }
+"""
 
 //
 // Make invalid states irrepresentable
